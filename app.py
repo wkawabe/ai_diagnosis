@@ -20,24 +20,29 @@ st.warning(
 # --- 2. OpenAIクライアントの初期化 ---
 import httpx # この行を追加
 
-# APIキーをサイドバーから入力
-api_key = st.sidebar.text_input("OpenAI APIキーを入力してください", type="password")
+st.sidebar.header("設定")
+# サイドバーでユーザーにAPIキーを入力してもらう
+api_key = st.sidebar.text_input(
+    "あなたのOpenAI APIキーを入力してください", 
+    type="password",
+    help="APIキーはこのブラウザセッションでのみ使用され、サーバーには保存されません。"
+)
+
+# APIキーが入力されているかチェック
 if api_key:
     try:
-        # httpxクライアントを明示的に作成します。
-        # これにより、通信時のエンコーディング問題を回避し、安定性を向上させることができます。
-        # タイムアウト時間を30秒に設定しています。
         custom_http_client = httpx.Client(timeout=30.0)
-        
         client = OpenAI(
             api_key=api_key,
-            http_client=custom_http_client  # カスタマイズしたクライアントを渡す
+            http_client=custom_http_client
         )
     except Exception as e:
+        # APIキーが不正な形式だった場合などのエラーハンドリング
         st.error(f"OpenAIクライアントの初期化中にエラーが発生しました: {e}")
         st.stop()
 else:
-    st.info("サイドバーからOpenAI APIキーを入力してください。")
+    # APIキーが入力されていない場合は、メッセージを表示して処理を中断
+    st.info("サイドバーにあなたのOpenAI APIキーを入力すると、問診を開始できます。")
     st.stop()
 
 # --- 3. 状態管理 (Session State) ---
