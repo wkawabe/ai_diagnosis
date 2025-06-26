@@ -6,7 +6,7 @@ from openai import OpenAI
 
 st.set_page_config(page_title="AI問診アシスタント", layout="wide")
 
-st.title("🩺 AI問診アシスタント (高機能版)")
+st.title("🩺 AI医療診断")
 st.write(
     "AIとの対話を通じて、あなたの症状から考えられる病気の可能性を探ります。"
     "Ubieのように、あなたの回答に合わせてAIが質問を生成します。"
