@@ -1,12 +1,13 @@
 import streamlit as st
 import json
+import httpx
 from openai import OpenAI
 
 # --- 1. 基本設定 ---
 
 st.set_page_config(page_title="AI問診アシスタント", layout="wide")
 
-st.title("🩺 AI医療診断")
+st.title("🩺 AI問診アシスタント (高機能版)")
 st.write(
     "AIとの対話を通じて、あなたの症状から考えられる病気の可能性を探ります。"
     "Ubieのように、あなたの回答に合わせてAIが質問を生成します。"
@@ -18,7 +19,6 @@ st.warning(
 )
 
 # --- 2. OpenAIクライアントの初期化 ---
-import httpx # この行を追加
 
 # APIキーをサイドバーから入力
 api_key = st.sidebar.text_input("OpenAI APIキーを入力してください", type="password")
